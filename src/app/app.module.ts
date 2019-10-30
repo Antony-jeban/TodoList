@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestore } from 'angularfire2/firestore';
+// import { AngularFirestoreModule } from 'angularfire2/firestore';
+// import { AngureFireDatabaseModule } from 'angularfire2/database';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +15,7 @@ import { TodoappComponent } from './components/todoapp/todoapp.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
 import { HomeComponent } from './components/home/home.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
     declarations: [
@@ -25,9 +30,10 @@ import { HomeComponent } from './components/home/home.component';
         NgbModule,
         BrowserModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        AngularFireModule.initializeApp(environment.firebase),
     ],
-    providers: [],
+    providers: [AngularFirestore],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
