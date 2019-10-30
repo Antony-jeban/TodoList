@@ -10,6 +10,7 @@ import { ManageExpenseComponent } from './components/manage-expense/manage-expen
 import { TodoappComponent } from './components/todoapp/todoapp.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
     declarations: [
@@ -17,7 +18,8 @@ import { LoginSignupComponent } from './components/login-signup/login-signup.com
         ManageExpenseComponent,
         TodoappComponent,
         PageNotFoundComponent,
-        LoginSignupComponent
+        LoginSignupComponent,
+        HomeComponent
     ],
     imports: [
         NgbModule,

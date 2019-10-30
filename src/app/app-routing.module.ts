@@ -5,10 +5,11 @@ import { ManageExpenseComponent } from './components/manage-expense/manage-expen
 import { TodoappComponent } from './components/todoapp/todoapp.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: '/login', },
+    { path: '', pathMatch: 'full', component: HomeComponent },
     { path: 'todo', component: TodoappComponent },
     { path: 'login-signup', component: LoginSignupComponent },
     { path: 'expense-manager', component: ManageExpenseComponent },
