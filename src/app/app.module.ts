@@ -2,25 +2,30 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { ManageExpenseComponent } from './manage-expense/manage-expense.component';
+import { ManageExpenseComponent } from './components/manage-expense/manage-expense.component';
+import { TodoappComponent } from './components/todoapp/todoapp.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { LoginSignupComponent } from './components/login-signup/login-signup.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    SignupComponent,
-    ManageExpenseComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        ManageExpenseComponent,
+        TodoappComponent,
+        PageNotFoundComponent,
+        LoginSignupComponent
+    ],
+    imports: [
+        NgbModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { ManageExpenseComponent } from './components/manage-expense/manage-expense.component';
+import { TodoappComponent } from './components/todoapp/todoapp.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { LoginSignupComponent } from './components/login-signup/login-signup.component';
 
 
 const routes: Routes = [
-    { path: '', component: AppComponent },
-    { path: '/login', component: LoginComponent },
-    { path: '/signup', component: SignupComponent },
-    { path: '/expense-manager', component: ManageExpenseComponent }
+    { path: '', pathMatch: 'full', redirectTo: '/login', },
+    { path: 'todo', component: TodoappComponent },
+    { path: 'login-signup', component: LoginSignupComponent },
+    { path: 'expense-manager', component: ManageExpenseComponent },
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
