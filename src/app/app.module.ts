@@ -16,6 +16,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
 import { HomeComponent } from './components/home/home.component';
 import { environment } from 'src/environments/environment';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,7 @@ import { environment } from 'src/environments/environment';
         FormsModule,
         AngularFireModule.initializeApp(environment.firebase),
     ],
-    providers: [AngularFirestore],
+    providers: [AngularFirestore, AngularFireAuth],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
