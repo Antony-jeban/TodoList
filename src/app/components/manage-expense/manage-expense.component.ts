@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+  AngularFirestoreCollection
+} from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-manage-expense',
@@ -7,9 +13,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageExpenseComponent implements OnInit {
 
-  constructor() { }
+  public myForm: FormGroup;
+  // public dailyExpenseArray: FormArray;
+
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit() {
+
+    this.myForm = this.fb.group({
+      expense: this.fb.array([])
+    });
+
+  }
+
+  get dailyExpenseArray() {
+    return this.myForm.get('expense') as FormArray;
+  }
+
+  public addFormGroup() {
+    const expenseGroup = this.fb.group({
+      amountGivenBy: '',
+      amountPayable: '',
+      timeFrame: ''
+    });
+
+    this.dailyExpenseArray.push(expenseGroup);
+  }
+
+  public deleteGroup(index: number) {
+    this.dailyExpenseArray.removeAt(index);
   }
 
 }

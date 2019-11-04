@@ -1,3 +1,6 @@
+
+<button (click)="getDataFromFireStore()">Click to view the list</button>
+
 <div *ngFor="let item of notes | async">
     {{ item | json }}
 </div>

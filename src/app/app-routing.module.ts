@@ -6,13 +6,14 @@ import { TodoappComponent } from './components/todoapp/todoapp.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LoginSignupComponent } from './components/login-signup/login-signup.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from 'src/app/core/auth.guard';
 
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', component: HomeComponent },
     { path: 'todo', component: TodoappComponent },
     { path: 'login-signup', component: LoginSignupComponent },
-    { path: 'expense-manager', component: ManageExpenseComponent },
+    { path: 'expense-manager', component: ManageExpenseComponent, canActivate: [AuthGuard] },
     { path: '**', component: PageNotFoundComponent }
 ];
 

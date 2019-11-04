@@ -1,1 +1,33 @@
-<p>manage-expense works!</p>
+<div class="row">
+    <div class="col bg-balck">
+        <p>My name</p>
+    </div>
+    <div class="col">
+        <p>My name</p>
+
+    </div>
+</div>
+
+
+<form [formGroup]='myForm'>
+    <div formArrayName='expense'>
+        <div *ngFor="let item of dailyExpenseArray.controls; let i=index" [formGroupName]='i'>
+
+            <select name="timeFrame" id="" formControlName='timeFrame'>
+                <option value="">--select--</option>
+                <option value="Morning">Morning</option>
+                <option value="Afternoon">Afternoon</option>
+                <option value="Night">Night</option>
+            </select>
+
+            <input type="text" formControlName='amountGivenBy'>
+            <input type="number" formControlName='amountPayable'>
+            <button class="btn btn-outline-danger" (click)='deleteGroup(i)'>Delete</button>
+        </div>
+
+        <button class="btn btn-outline-primary" (click)=addFormGroup()>add new</button>
+    </div>
+</form>
+
+
+{{ myForm.value | json }}

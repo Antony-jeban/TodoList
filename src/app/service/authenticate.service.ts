@@ -8,9 +8,10 @@ import {
   AngularFirestoreDocument
 } from '@angular/fire/firestore'
 
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { User } from 'src/app/modals/users.modal';
 import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
