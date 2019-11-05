@@ -10,8 +10,8 @@
         </div>
     </div>
     <ul>
-        <li *ngFor="let d of list; let i=index; ">
-            {{d}}
+        <li *ngFor="let d of list | async; let i=index; ">
+            {{d | json}}
             <button (click)="updateData(i)" class="btn btn-outline-secondary" type="button"
                 id="button-addon2">Update</button>
             <button (click)="deleteData(i)" class="btn btn-outline-secondary" type="button"

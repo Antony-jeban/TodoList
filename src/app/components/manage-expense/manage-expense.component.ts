@@ -14,7 +14,6 @@ import {
 export class ManageExpenseComponent implements OnInit {
 
   public myForm: FormGroup;
-  // public dailyExpenseArray: FormArray;
 
   constructor(
     private fb: FormBuilder
