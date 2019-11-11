@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
+import { first, get } from 'lodash-es';
+
 @Component({
     selector: 'app-todoapp',
     templateUrl: './todoapp.component.html',
     styleUrls: ['./todoapp.component.css']
 })
-export class TodoappComponent implements OnInit{
+export class TodoappComponent implements OnInit {
 
     constructor(
         private afStore: AngularFirestore,
@@ -20,16 +22,21 @@ export class TodoappComponent implements OnInit{
 
     private idNumber = 0;
 
+    data: any;
+
     ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
-        this.list = this.getToDoCollection().valueChanges();
+        this.getToDoCollection().subscribe(res => {
+            this.data = res;
+        });
+        
+        this.list = [];
     }
 
     addData() {
         console.log(this.item)
         if (this.buttonName === 'Add') {
             this.list.push(this.item);
+            this.addItemtoDB({ id: this.idNumber + 1, isCompleted: false, taskName: this.item });
         } else {
             this.list[this.idNumber] = this.item;
             this.buttonName = 'Add';
@@ -45,9 +52,10 @@ export class TodoappComponent implements OnInit{
         this.item = this.list[n];
     }
 
-    deleteData(n) {
-        console.log(this.item)
-        this.list.splice(n, 1);
+    deleteData(n, data) {
+        // console.log(this.item)
+        // this.list.splice(n, 1);
+        this.deleteDataItem(data, n);
     }
 
 
@@ -57,7 +65,33 @@ export class TodoappComponent implements OnInit{
     }
 
     private getToDoCollection() {
-        return this.afStore.collection('todo-app');
+        return this.afStore.collection('todo-app').snapshotChanges();
+    }
+
+    private addItemtoDB(data: any) {
+        this.afStore
+            .collection('todo-app')
+            .add(data)
+    }
+
+    private updateDataItem(data) {
+        return this.afStore
+            .collection("todo-app")
+            .doc(data.payload.doc.id)
+            .set({ completed: true }, { merge: true });
+    }
+
+    private deleteDataItem(data, index) {
+        const docCollection = this.afStore.collection('todo-app', (ref => ref.where('id', '==', index).where('taskName', '==', data.taskName)));
+        docCollection.snapshotChanges().subscribe(res => {
+            const id = get(first(res), 'payload.doc.id', '')
+            if (id) {
+                this.afStore.doc(`todo-app/${id}`).delete();
+            }
+            console.log(first(res));
+        })
+
+        return true
     }
 
 }
