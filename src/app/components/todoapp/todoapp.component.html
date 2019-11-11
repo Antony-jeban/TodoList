@@ -1,0 +1,23 @@
+<p>This is a production branch and update some changes</p>
+
+<div class="container">
+    <div class="input-group mb-3">
+        <input type="text" [(ngModel)]="item" class="form-control-lg" placeholder="Enter Data">
+        <div class="input-group-append">
+            <button (click)="addData()" class="btn btn-outline-secondary" type="button"
+                id="button-addon2">{{ buttonName }}
+            </button>
+        </div>
+    </div>
+    <ul>
+        <li *ngFor="let d of data; let i=index; ">
+            <input type="checkbox" name="TaskStatus" value="{{ d.payload.doc.data().isCompleted }}">
+            {{ d.payload.doc.data().taskName }}
+            <button (click)="updateData(i)" class="btn btn-outline-secondary" type="button"
+                id="button-addon2">Update</button>
+            <button (click)="deleteData(i, d)" class="btn btn-outline-secondary" type="button"
+                id="button-addon2">Delete</button>
+        </li>
+    </ul>
+
+</div>
