@@ -16,7 +16,7 @@ export class TodoappComponent implements OnInit {
 
     }
 
-    item: string;
+    item: any
     list: any = [];
     public buttonName = 'Add';
 
@@ -24,11 +24,13 @@ export class TodoappComponent implements OnInit {
 
     data: any;
 
+    public tempData: any;
+
     ngOnInit(): void {
         this.getToDoCollection().subscribe(res => {
             this.data = res;
         });
-        
+
         this.list = [];
     }
 
@@ -38,24 +40,28 @@ export class TodoappComponent implements OnInit {
             this.list.push(this.item);
             this.addItemtoDB({ id: this.idNumber + 1, isCompleted: false, taskName: this.item });
         } else {
+            this.updateDataItem(this.tempData, { isCompleted: false, name: this.item });
+            console.log(this.item);
             this.list[this.idNumber] = this.item;
             this.buttonName = 'Add';
         }
         this.item = '';
     }
 
-    updateData(n) {
-        console.log(this.list[n]);
-
-        this.showUpdatedItem(this.list[n], n);
+    updateData(data, n) {
+        this.tempData = data;
+        this.item = data.payload.doc.data().taskName;
         this.buttonName = 'Update';
-        this.item = this.list[n];
     }
 
     deleteData(n, data) {
         // console.log(this.item)
         // this.list.splice(n, 1);
-        this.deleteDataItem(data, n);
+        this.deleteDataItem(data, n).then(res => {
+            console.log('data deleted');
+        }).catch(err => {
+            console.log('caannot delete data' + err);
+        });
     }
 
 
@@ -74,24 +80,18 @@ export class TodoappComponent implements OnInit {
             .add(data)
     }
 
-    private updateDataItem(data) {
+    private updateDataItem(data, item) {
         return this.afStore
             .collection("todo-app")
             .doc(data.payload.doc.id)
-            .set({ completed: true }, { merge: true });
+            .set({ isCompleted: item.isCompleted, taskName: item.name }, { merge: true });
     }
 
     private deleteDataItem(data, index) {
-        const docCollection = this.afStore.collection('todo-app', (ref => ref.where('id', '==', index).where('taskName', '==', data.taskName)));
-        docCollection.snapshotChanges().subscribe(res => {
-            const id = get(first(res), 'payload.doc.id', '')
-            if (id) {
-                this.afStore.doc(`todo-app/${id}`).delete();
-            }
-            console.log(first(res));
-        })
-
-        return true
+        return this.afStore
+            .collection("todo-app")
+            .doc(data.payload.doc.id)
+            .delete();
     }
 
 }
