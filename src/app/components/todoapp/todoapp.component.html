@@ -11,9 +11,9 @@
     </div>
     <ul>
         <li *ngFor="let d of data; let i=index; ">
-            <input type="checkbox" name="TaskStatus" value="{{ d.payload.doc.data().isCompleted }}">
+            <input type="checkbox" name="TaskStatus" value="0">
             {{ d.payload.doc.data().taskName }}
-            <button (click)="updateData(i)" class="btn btn-outline-secondary" type="button"
+            <button (click)="updateData(d, i)" class="btn btn-outline-secondary" type="button"
                 id="button-addon2">Update</button>
             <button (click)="deleteData(i, d)" class="btn btn-outline-secondary" type="button"
                 id="button-addon2">Delete</button>
