@@ -11,6 +11,7 @@ import { AuthGuard } from 'src/app/core/auth.guard';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
     { path: 'todo', component: TodoappComponent },
     { path: 'login-signup', component: LoginSignupComponent },
     { path: 'expense-manager', component: ManageExpenseComponent, canActivate: [AuthGuard] },
