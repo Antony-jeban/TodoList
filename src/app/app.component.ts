@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+    public navbarOpen: boolean;
+
+    toggleNavbar() {
+        this.navbarOpen = !this.navbarOpen;
+    }
 
 }
