@@ -31,3 +31,22 @@
 
 
 {{ myForm.value | json }}
+
+<hr>
+
+<div *ngFor="let item of amountManagerIteration; let i = index">
+    week {{i+1}}
+    <amount-manager-core name="{{ weekNumber }}"></amount-manager-core>
+</div>
+<p>
+    <span>
+        <input type="button" value="+" (click)="addAmountManager()">
+    </span>
+    <span>
+        <input type="button" value="-" (click)="removeAmountManager()">
+    </span>
+</p>
+<div>Current Status:</div>
+<div>Jorence:{{jorenceTotal}}</div>
+<div>Jeban:{{jorenceTotal}}</div>
+<div>Total:{{jorenceTotal}}</div>

@@ -14,6 +14,10 @@ import {
 export class ManageExpenseComponent implements OnInit {
 
   public myForm: FormGroup;
+  amountManagerIteration: any[] = [];
+  weekNumber=0;//not needed now
+  jebanTotal=200;
+  jorenceTotal=200;
 
   constructor(
     private fb: FormBuilder
@@ -43,6 +47,16 @@ export class ManageExpenseComponent implements OnInit {
 
   public deleteGroup(index: number) {
     this.dailyExpenseArray.removeAt(index);
+  }
+
+
+
+  addAmountManager() {
+    this.amountManagerIteration.push({ name: "" });
+  }
+
+  removeAmountManager() {
+    this.amountManagerIteration.pop();
   }
 
 }

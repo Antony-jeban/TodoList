@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { first, get } from 'lodash-es';
+import { ExpenseManagerService } from 'src/app/service/expense-manager-service.service';
 
 @Component({
     selector: 'app-todoapp',
@@ -12,37 +13,34 @@ export class TodoappComponent implements OnInit {
 
     constructor(
         private afStore: AngularFirestore,
+        private expManager: ExpenseManagerService
     ) {
 
     }
 
     item: any
-    list: any = [];
     public buttonName = 'Add';
 
     private idNumber = 0;
+
+    private collectionName = 'todo-app'
 
     data: any;
 
     public tempData: any;
 
     ngOnInit(): void {
-        this.getToDoCollection().subscribe(res => {
+        this.expManager.getexpenseCollection(this.collectionName).subscribe(res => {
             this.data = res;
         });
 
-        this.list = [];
     }
 
     addData() {
-        console.log(this.item)
         if (this.buttonName === 'Add') {
-            this.list.push(this.item);
-            this.addItemtoDB({ id: this.idNumber + 1, isCompleted: false, taskName: this.item });
+            this.expManager.addItemtoDB({ id: this.idNumber + 1, isCompleted: false, taskName: this.item }, this.collectionName);
         } else {
-            this.updateDataItem(this.tempData, { isCompleted: false, name: this.item });
-            console.log(this.item);
-            this.list[this.idNumber] = this.item;
+            this.expManager.updateDataItem(this.tempData, { isCompleted: false, name: this.item }, this.collectionName);
             this.buttonName = 'Add';
         }
         this.item = '';
@@ -55,9 +53,7 @@ export class TodoappComponent implements OnInit {
     }
 
     deleteData(n, data) {
-        // console.log(this.item)
-        // this.list.splice(n, 1);
-        this.deleteDataItem(data, n).then(res => {
+        this.expManager.deleteDataItem(data, n, this.collectionName).then(res => {
             console.log('data deleted');
         }).catch(err => {
             console.log('caannot delete data' + err);
@@ -68,30 +64,6 @@ export class TodoappComponent implements OnInit {
     showUpdatedItem(newItem, n) {
         this.item = newItem;
         this.idNumber = n;
-    }
-
-    private getToDoCollection() {
-        return this.afStore.collection('todo-app').snapshotChanges();
-    }
-
-    private addItemtoDB(data: any) {
-        this.afStore
-            .collection('todo-app')
-            .add(data)
-    }
-
-    private updateDataItem(data, item) {
-        return this.afStore
-            .collection("todo-app")
-            .doc(data.payload.doc.id)
-            .set({ isCompleted: item.isCompleted, taskName: item.name }, { merge: true });
-    }
-
-    private deleteDataItem(data, index) {
-        return this.afStore
-            .collection("todo-app")
-            .doc(data.payload.doc.id)
-            .delete();
     }
 
 }

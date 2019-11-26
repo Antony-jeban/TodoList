@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from '@angular/fire/firestore'
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection, DocumentData } from '@angular/fire/firestore'
 import { Observable } from 'rxjs/internal/Observable';
 import { of } from 'rxjs/internal/observable/of';
-import { ExpenseManagerServiceService } from 'src/app/service/expense-manager-service.service';
+import { ExpenseManagerService } from 'src/app/service/expense-manager-service.service';
 
 @Component({
   selector: 'app-home',
@@ -11,22 +11,20 @@ import { ExpenseManagerServiceService } from 'src/app/service/expense-manager-se
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  collection: AngularFirestoreCollection;
-  notes: Observable<any>;
+  collection: DocumentData;
+  notes: any;
   constructor(
-    private expManagerService: ExpenseManagerServiceService
+    private expManagerService: ExpenseManagerService
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
+    this.expManagerService.getexpenseCollection('expense').subscribe((res) => {
+      this.collection = res;
+    });
   }
-  
+
   getDataFromFireStore() {
-    this.collection = this.expManagerService.getexpenseCollection();
-    this.notes = this.collection.valueChanges();
-    // const id = this.collection.doc(this.notes.payload.doc.id);
-    // console.log('payloadId', id);
-    console.log(this.notes);
-    
+    this.notes = this.collection;
   }
 
 }

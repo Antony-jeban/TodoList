@@ -16,6 +16,7 @@ import { HomeComponent } from './components/home/home.component';
 import { environment } from 'src/environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AmountManagerCoreComponent } from './components/amount-manager-core/amount-manager-core.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         TodoappComponent,
         PageNotFoundComponent,
         LoginSignupComponent,
-        HomeComponent
+        HomeComponent,
+        AmountManagerCoreComponent
     ],
     imports: [
         NgbModule,

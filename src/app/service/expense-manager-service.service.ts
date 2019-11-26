@@ -4,12 +4,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class ExpenseManagerServiceService {
+export class ExpenseManagerService {
 
   constructor(private afStore: AngularFirestore) { }
 
-  getexpenseCollection() {
-    return this.afStore.collection('expense');
+  getexpenseCollection(collectionName: string) {
+    return this.afStore.collection(collectionName).snapshotChanges();
   }
 
   getExpenseBasedOnUser() {
@@ -17,5 +17,25 @@ export class ExpenseManagerServiceService {
     // const orderedList = collection
   }
 
-  
+  addItemtoDB(data: any, collectionName: string) {
+    this.afStore
+      .collection(collectionName)
+      .add(data)
+  }
+
+  updateDataItem(data, item, collectionName: string) {
+    return this.afStore
+      .collection("todo-app")
+      .doc(data.payload.doc.id)
+      .set({ isCompleted: item.isCompleted, taskName: item.name }, { merge: true });
+  }
+
+  deleteDataItem(data, index, collectionName: string) {
+    return this.afStore
+      .collection("todo-app")
+      .doc(data.payload.doc.id)
+      .delete();
+  }
+
+
 }
